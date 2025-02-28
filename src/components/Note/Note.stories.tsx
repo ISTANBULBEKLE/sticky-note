@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
+import { action } from '@storybook/addon-actions';
 import Note from './Note';
 
 const meta = {
@@ -9,6 +10,13 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+        <div style={{ margin: '-2rem' }}>
+          <Story />
+        </div>
+    ),
+  ],
 } satisfies Meta<typeof Note>;
 
 export default meta;
@@ -21,7 +29,7 @@ const mockNote = {
   created_at: '2024-03-15T10:00:00Z',
   warning_tag: 'Work',
   onDelete: async (id: number) => {
-    console.log('Delete clicked for note:', id);
+    action('delete-note')(id);
     return Promise.resolve();
   },
 };
