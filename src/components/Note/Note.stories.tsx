@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { within, userEvent } from '@storybook/testing-library';
 import Note from './Note';
 
 const meta = {
@@ -32,6 +33,19 @@ export const Default: Story = {
   },
 };
 
+// Note with delete interaction
+export const WithDeleteAction: Story = {
+  args: {
+    ...mockNote,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const deleteButton = canvas.getByRole('button', { name: /delete/i });
+    // Click the delete button
+    await userEvent.click(deleteButton);
+  },
+};
+
 // Note with long content
 export const LongContent: Story = {
   args: {
@@ -54,4 +68,4 @@ export const OldNote: Story = {
     ...mockNote,
     created_at: '2023-01-01T00:00:00Z',
   },
-}; 
+};
